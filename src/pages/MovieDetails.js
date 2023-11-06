@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 
 const MovieDetails = () => {
-
+  // const {dogId} = useParams();
 
   useEffect(() => {});
   return <>FilmDetails</>;
