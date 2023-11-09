@@ -1,26 +1,26 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { HeaderStyled, NavStyled, StyledNavLink } from './Layout.styled';
+
+import { Footer } from 'pages/Footer';
 const Layout = () => {
   return (
     <div>
-      <header>
-        <ul>
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/movies">Movies</NavLink>
-          </li>
-        </ul>
-      </header>
+      <HeaderStyled>
+        <NavStyled>
+          <StyledNavLink to="/">Home</StyledNavLink>
+          <StyledNavLink to="/movies">Movies</StyledNavLink>
+        </NavStyled>
+      </HeaderStyled>
 
       <main>
         <Outlet />
       </main>
 
-      <footer></footer>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
 
 export default Layout;
-
