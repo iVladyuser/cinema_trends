@@ -1,47 +1,61 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Loader, MoviesList, SearchBar } from '../components';
+import { Notify } from 'notiflix';
 import { fetchSearchFilm } from '../services/api';
-import { onFetchError } from 'services/showError';
+import { onFetchError, paramsForNotify } from 'services/showError';
 import { SectionStyle } from './Pages.styled';
 
 // import { useSearchParams, useState, useLocation, Link } from 'react-router-dom';
 
-const endPoint = 'search/movie';
+const endPoint = '/search/movie';
 
 const Movies = () => {
-  const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const [searchedFilm, setSearchFilm] = useState(null);
+  const searchQuery = searchParams.get('query');
 
-  // const queryFilm = searchParams.get('query');
-
-  // const locatioon = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
+    if (!searchQuery) return;
+
     if (films.length > 0) {
       return;
     }
-    fetchSearchFilm(endPoint)
+    setLoading(true);
+    fetchSearchFilm(endPoint, searchQuery)
       .then(data => {
         setFilms(data.results);
       })
       .catch(onFetchError)
       .finally(() => setLoading(false));
-  }, [films]);
-  // const onFormSubmit = e => {
-  //   e.preventDefault();
-  //   const value = e.currentTarget.elements.search.value;
-  //   setSearchParams({ query: value });
-  // };
+  }, [films, searchQuery]);
+
+  const onSubmitSearchBar = value => {
+    const searchValue = value.trim().toLowerCase().split(' ').join('+');
+
+    if (searchValue === '') {
+      setSearchParams({});
+      setFilms([]);
+      Notify.info('Enter your request, please!', paramsForNotify);
+      return;
+    }
+
+    if (searchValue === searchQuery) {
+      Notify.info('Enter new request, please!', paramsForNotify);
+      return;
+    }
+    setSearchParams({ query: searchValue });
+    setFilms([]);
+  };
 
   return (
     <>
-      <SearchBar
-      //onSubmit={onFormSubmit}
-      />
-      {/* <Link state={{ from: locatioon }} 
+      <SearchBar onSubmitSearchBar={onSubmitSearchBar} value={searchQuery} />
+      {/* <Link state={{ from: location }} 
       //key={} to={``} 
       /> */}
       <SectionStyle>
