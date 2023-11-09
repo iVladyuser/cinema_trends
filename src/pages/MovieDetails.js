@@ -5,6 +5,10 @@ const MovieDetails = () => {
   // const {dogId} = useParams();
 
   useEffect(() => {});
-  return <>FilmDetails</>;
+  return (
+    <>
+      {/* <Link to={backLinkRef.current}>Go back</Link> */}
+    </>
+  );
 };
 export default MovieDetails;
