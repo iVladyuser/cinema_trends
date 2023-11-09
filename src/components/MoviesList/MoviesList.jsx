@@ -6,8 +6,8 @@ const MoviesList = ({ films }) => {
     
     return <ListStyle>
         {films.map(({ id, title, overview, poster_path }) =>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-                <ItemStyle key={id}>
+            <Link key={id} to={`/movies/${id}`} state={{ from: location }}>
+                <ItemStyle>
                     <img src={poster_path ?
                         `http://image.tmdb.org/t/p/w154${poster_path}` :
                         'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'}
