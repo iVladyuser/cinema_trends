@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader, MoviesList, SearchBar } from '../components';
 import { Notify } from 'notiflix';
-import { fetchSearchFilm } from '../services/api';
+import { fetchSearchMovie } from '../services/api';
 import { onFetchError, paramsForNotify } from 'services/showError';
 import { SectionStyle } from './Pages.styled';
 
@@ -13,7 +13,7 @@ const endPoint = '/search/movie';
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [films, setFilms] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const searchQuery = searchParams.get('query');
 
@@ -26,7 +26,7 @@ const Movies = () => {
       return;
     }
     setLoading(true);
-    fetchSearchFilm(endPoint, searchQuery)
+    fetchSearchMovie(endPoint, searchQuery)
       .then(data => {
         setFilms(data.results);
       })

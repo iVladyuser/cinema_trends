@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Loader, MoviesList } from '../components';
-import { fetchTrendingFilms } from '../services/api';
+import { fetchTrendingMovies } from '../services/api';
 import { onFetchError } from 'services/showError';
 import { SectionStyle } from './Pages.styled';
 
@@ -14,7 +14,7 @@ const Home = () => {
     if (films.length > 0) {
       return;
     }
-    fetchTrendingFilms(endPoint)
+    fetchTrendingMovies(endPoint)
       .then(data => {
         setFilms(data.results);
       })

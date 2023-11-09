@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Suspense } from "react"; 
 import { HeaderStyled, NavStyled, StyledNavLink } from './Layout.styled';
 
 import { Footer } from 'pages/Footer';
@@ -13,7 +14,9 @@ const Layout = () => {
       </HeaderStyled>
 
       <main>
-        <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+                <Outlet />
+            </Suspense>
       </main>
 
       <footer>
