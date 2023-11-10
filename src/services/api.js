@@ -16,8 +16,19 @@ export const fetchSearchMovie = async (endPoint, query) => {
 };
 
 export const fetchMovieDetails = async (endPoint, movieId) => {
-  const url = `${URL}${endPoint}/${movieId}?api_key=${KEY}`
+  const url = `${URL}${endPoint}/${movieId}?api_key=${KEY}`;
   const response = await axios.get(url);
   return response.data;
 };
 
+export const fetchMovieCast = async (endPoint, movieId) => {
+  const url = `${URL}${endPoint}/${movieId}/credits?api_key=${KEY}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export const fetchMovieReviews = async (endPoint, movieId) => {
+  const url = `${URL}${endPoint}/${movieId}/reviews?api_key=${KEY}`;
+  const response = await axios.get(url);
+  return response.data;
+};
