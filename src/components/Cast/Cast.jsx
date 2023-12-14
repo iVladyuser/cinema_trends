@@ -2,8 +2,9 @@ import { Loader } from '../../components';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCast } from '../../services/api';
-import { onFetchError } from '../../services/showError';
-import { ListCastStyle, ItemCastStyle, CastHaracter } from './Cast.styled';
+
+import { toast } from 'react-toastify';
+import { StyledCast, StyledCastItem, StyledCastName } from './Cast.styled';
 
 const endPoint = '/movie';
 
@@ -21,7 +22,9 @@ const Cast = () => {
       .then(data => {
         setCast(data.cast);
       })
-      .catch(onFetchError)
+      .catch(error => {
+        toast.error(error.message);
+      })
       .finally(() => setLoading(false));
   }, [movieId]);
 
@@ -31,21 +34,26 @@ const Cast = () => {
 
   return (
     <>
-      <h3>Cast :</h3>
       {loading && <Loader />}
       {cast.length !== 0 ? (
-        <ListCastStyle>
-      {cast.map(({ id, name, character, profile_path }) =>
-                    <ItemCastStyle key={id}>
-                        <b>{name}</b>
-                        <CastHaracter>Character: {character}</CastHaracter>
-                        <img src={profile_path ?
-                        `http://image.tmdb.org/t/p/w185${profile_path}` :
-                        'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'}
-                        alt={name} width="100" height="150" />
-            </ItemCastStyle>
-          )}
-        </ListCastStyle>
+        <StyledCast>
+          {cast.map(({ id, name, character, profile_path }) => (
+            <StyledCastItem key={id}>
+              <img
+                src={
+                  profile_path
+                    ? `http://image.tmdb.org/t/p/w185${profile_path}`
+                    : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
+                }
+                alt={name}
+                width="100"
+                height="150"
+              />
+              <StyledCastName>{name}</StyledCastName>
+              <p>Character: {character}</p>
+            </StyledCastItem>
+          ))}
+        </StyledCast>
       ) : (
         <p>Sorry! We don't have any informtion about cast</p>
       )}

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Loader, MoviesList } from '../components';
 import { fetchTrendingMovies } from '../services/api';
-import { onFetchError } from 'services/showError';
-import { SectionStyle } from './Pages.styled';
+import { toast } from 'react-toastify';
+import { StyledTrendingTitle } from './Pages.styled';
 
 const endPoint = '/trending/movie/day';
 
@@ -18,16 +18,16 @@ const Home = () => {
       .then(data => {
         setFilms(data.results);
       })
-      .catch(onFetchError)
+      .catch(error => {
+        toast.error(error.message);
+      })
       .finally(() => setLoading(false));
   }, [films]);
   return (
     <div>
-      <SectionStyle>
-        <h2>Movies in trend</h2>
-        {loading && <Loader />}
-        <MoviesList films={films} />
-      </SectionStyle>
+      <StyledTrendingTitle>Movies in trend</StyledTrendingTitle>
+      {loading && <Loader />}
+      {films.length !== 0 && <MoviesList films={films} />}
     </div>
   );
 };

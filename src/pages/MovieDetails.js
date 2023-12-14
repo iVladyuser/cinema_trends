@@ -1,14 +1,18 @@
 import { Loader } from '../components';
 import { Suspense, useEffect, useState, useRef } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { FaArrowLeft, FaStar } from 'react-icons/fa';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMovieDetails } from '../services/api';
-import { onFetchError } from 'services/showError';
+import { toast } from 'react-toastify';
 import {
-  AddListStyle,
-  CardStyle,
-  SectionStyle,
-  WrapStyle,
+  AdditionalInformation,
+  StyledBox,
+  StyledDescrip,
+  StyledGoToBack,
+  StyledInformationBox,
+  StyledInformationTitle,
   StyledLink,
+  TitleWithRation,
 } from './Pages.styled';
 const endPoint = '/movie';
 
@@ -29,7 +33,9 @@ const MovieDetails = () => {
       .then(data => {
         setMovie(data);
       })
-      .catch(onFetchError)
+      .catch(error => {
+        toast.error(error.message);
+      })
       .finally(() => setLoading(false));
   }, [movieId]);
 
@@ -39,7 +45,7 @@ const MovieDetails = () => {
   const {
     poster_path,
     title,
-    original_title,
+
     release_date,
     genres,
     vote_average,
@@ -47,53 +53,69 @@ const MovieDetails = () => {
   } = movie;
 
   return (
-    <SectionStyle>
-      <StyledLink to={backLinkRef.current}>{'<<<< BACK'}</StyledLink>
+    <div>
       {loading && <Loader />}
       {movie && (
         <>
-          <WrapStyle>
-            <img
-              src={
-                poster_path
-                  ? `http://image.tmdb.org/t/p/w342${poster_path}`
-                  : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
-              }
-              alt={title}
-              width="200"
-            />
-            <CardStyle>
-              <h3>{original_title}</h3>
+          <StyledGoToBack to={backLinkRef.current}>
+            <FaArrowLeft /> back
+          </StyledGoToBack>
+
+          <StyledBox>
+            <div>
+              <img
+                src={
+                  poster_path
+                    ? `http://image.tmdb.org/t/p/w342${poster_path}`
+                    : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
+                }
+                alt={title}
+                width="300px"
+              />
+            </div>
+
+            <StyledDescrip>
+              <TitleWithRation>
+                <h1 style={{ color: 'orangered' }}>{title}</h1>
+                <h3>
+                  Rating: {vote_average} <FaStar style={{ color: 'gold' }} />
+                </h3>
+              </TitleWithRation>
+
               <p>
                 <b>Release date:</b> {release_date}
               </p>
-              <p>
-                <b>Genres:</b>{' '}
-                {genres.map(({ name }) => `${name.toLowerCase()} | `)}
-              </p>
-              <p>
-                <b>Ranking:</b> {vote_average}
-              </p>
-              <p>
-                <b>Overview:</b> {overview}
-              </p>
-            </CardStyle>
-          </WrapStyle>
-          <h3>Additional information:</h3>
-          <AddListStyle>
-            <li>
-              <Link to="cast">Cast</Link>
-            </li>
-            <li>
-              <Link to="reviews">Reviews</Link>
-            </li>
-          </AddListStyle>
-          <Suspense fallback={<div>Loading...</div>}>
+
+              <h2>Overview</h2>
+              <p>{overview}</p>
+              <h2>Genres</h2>
+              <ul>
+                {genres.map(genre => (
+                  <li key={genre.id}>{genre.name}</li>
+                ))}
+              </ul>
+            </StyledDescrip>
+          </StyledBox>
+          <AdditionalInformation>
+            <StyledInformationTitle>
+              Additional information
+            </StyledInformationTitle>
+
+            <StyledInformationBox>
+              <li>
+                <StyledLink to="cast">Cast</StyledLink>
+              </li>
+              <li>
+                <StyledLink to="reviews">Reviews</StyledLink>
+              </li>
+            </StyledInformationBox>
+          </AdditionalInformation>
+          <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
         </>
       )}
-    </SectionStyle>
+    </div>
   );
 };
 

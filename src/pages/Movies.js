@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Loader, MoviesList, SearchBar } from '../components';
 import { Notify } from 'notiflix';
 import { fetchSearchMovie } from '../services/api';
-import { onFetchError, paramsForNotify } from 'services/showError';
-import { SectionStyle } from './Pages.styled';
+import { paramsForNotify } from 'services/showError';
+import { toast } from 'react-toastify';
 
 // import { useSearchParams, useState, useLocation, Link } from 'react-router-dom';
 
@@ -22,17 +22,20 @@ const Movies = () => {
   useEffect(() => {
     if (!searchQuery) return;
 
-    if (films.length > 0) {
-      return;
-    }
     setLoading(true);
     fetchSearchMovie(endPoint, searchQuery)
       .then(data => {
-        setFilms(data.results);
+        if (data.length === 0) {
+          toast.error('No movies found for your query!');
+        } else {
+          setFilms(data.results);
+        }
       })
-      .catch(onFetchError)
+      .catch(error => {
+        toast.error(error.message);
+      })
       .finally(() => setLoading(false));
-  }, [films, searchQuery]);
+  }, [searchQuery]);
 
   const onSubmitSearchBar = value => {
     const searchValue = value.trim().toLowerCase().split(' ').join('+');
@@ -55,13 +58,9 @@ const Movies = () => {
   return (
     <>
       <SearchBar onSubmitSearchBar={onSubmitSearchBar} value={searchQuery} />
-      {/* <Link state={{ from: location }} 
-      //key={} to={``} 
-      /> */}
-      <SectionStyle>
-        {loading && <Loader />}
-        <MoviesList films={films} />
-      </SectionStyle>
+
+      {loading && <Loader />}
+      <MoviesList films={films} />
     </>
   );
 };
