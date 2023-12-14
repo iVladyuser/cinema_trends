@@ -1,23 +1,25 @@
 import styled from 'styled-components';
 
-export const ListCastStyle = styled.ul`
+export const StyledCast = styled.ul`
   display: flex;
-  gap: 30px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
 `;
 
-export const ItemCastStyle = styled.li`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 5px;
-  width: 170px;
-  height: 250px;
-  cursor: pointer;
-  overflow: hidden;
+export const StyledCastItem = styled.li`
+  width: 200px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #4d4545;
+  color: white;
+  text-align: center;
 `;
 
-export const CastHaracter = styled.p`
-  min-height: 40px;
+export const StyledCastName = styled.h2`
+  text-transform: uppercase;
+  font-size: 20px;
 `;

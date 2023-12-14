@@ -1,59 +1,108 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
-export const SectionStyle = styled.section`
-  padding: 20px;
+export const StyledBox = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: start;
+  color: white;
+  margin-top: 10px;
 `;
 
-export const StyledLink = styled(Link)`
-  color: red;
-  font-weight: 600;
-  padding: 5px;
-  border: 2px solid rgba(6, 71, 80, 0.959);
-  border-radius: 5px;
-  width: 100px;
+export const TitleWithRation = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  color: white;
+  margin-top: 10px;
+`;
+
+export const StyledDescrip = styled.div`
+  max-width: 600px;
+
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #4d4545;
+  color: white;
+`;
+
+export const AdditionalInformation = styled.div`
+  margin-bottom: 30px;
+`;
+
+export const StyledInformationTitle = styled.h3`
+  text-transform: uppercase;
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: start;
+  color: white;
+`;
+
+export const StyledInformationBox = styled.div`
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: start;
+  color: white;
+  list-style: none;
+`;
+
+export const StyledLink = styled(NavLink)`
+  padding: 8px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  background-color: #5f5d5d;
+
+  &:hover {
+    color: orangered;
+    border: 1px solid orangered;
+  }
+
   &.active {
-    color: orange;
+    color: white;
+    background-color: orangered;
   }
 `;
 
-export const WrapStyle = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-export const CardStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 400px;
-`;
-
-export const AddListStyle = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+export const StyledGoToBack = styled(Link)`
+  text-decoration: none;
+  color: #ffffff;
   font-weight: 500;
-  text-decoration: underline;
+  text-transform: uppercase;
+  margin: 20px;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    color: orangered;
+  }
 `;
 
-export const FooterStyle = styled.div`
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: 44px;
-  padding-right: 24px;
-  padding-left: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  color: #fff;
-  background: rgba(6, 71, 80, 0.959);
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+export const StyledTrendingTitle = styled.h2`
+  text-transform: uppercase;
+  font-size: 32px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-style: italic;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.945);
+  box-shadow: 14px 14px 30px 0px rgba(0, 0, 0, 0.51);
+  -webkit-box-shadow: 14px 14px 30px 0px rgba(0, 0, 0, 0.51);
+  -moz-box-shadow: 14px 14px 30px 0px rgba(0, 0, 0, 0.51);
 `;

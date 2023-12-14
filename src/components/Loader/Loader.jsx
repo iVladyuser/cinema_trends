@@ -1,16 +1,17 @@
-import { FallingLines } from 'react-loader-spinner';
+import { RotatingLines } from 'react-loader-spinner';
+import { StyledLoader } from './Loader.styled';
 
 const Loader = () => {
   return (
-    <div className="loader">
-      <FallingLines
-        position="center-center"
-        color="rgba(6, 71, 80, 0.959)"
-        width="100"
+    <StyledLoader>
+      <RotatingLines
+        strokeColor="orangered"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
         visible={true}
-        ariaLabel="falling-lines-loading"
       />
-    </div>
+    </StyledLoader>
   );
 };
 

@@ -26,12 +26,11 @@ const Searchbar = ({ onSubmitSearchBar }) => {
           name="search"
           autoComplete="off"
           autoFocus
-          placeholder="Search films..."
+          placeholder="Search movies..."
         ></SearchFormInput>
       </SearchForm>
     </SearchbarHeader>
-  )
+  );
 };
 
 export default Searchbar;
-
