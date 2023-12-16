@@ -23,6 +23,7 @@ const Home = () => {
       })
       .finally(() => setLoading(false));
   }, [films]);
+
   return (
     <div>
       <StyledTrendingTitle>Movies in trend</StyledTrendingTitle>
